@@ -1,0 +1,28 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+.main {
+  position: fixed;
+  top: 84%;
+  left: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.text {
+  width: 1200px;
+  font-size: 35px;
+}
+
+.typed-cursor {
+  display: none;
+}

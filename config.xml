@@ -1,0 +1,7 @@
+<widget id="com.sharnavtech.spaceshooter" version="1.0">
+	<name>Space Shooter</name>
+	<description>Selfly Designed Space Shooter Game for Android. Please feel free to report any bugs, if found.</description>
+	<author email="sharnav123@gmail.com">Sharnav M.</author>
+	<icon src="icon.png" />
+	<preference name="orientation" value="landscape" />
+</widget>
