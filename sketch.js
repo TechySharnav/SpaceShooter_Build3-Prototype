@@ -1,9 +1,9 @@
 //All Variable Declarations
-var gameState = 0;
+var gameState = 1;
 var dial1, dial2, dial3, dial4, dial5, dial6;
-var touchCount = 0;
 var bgImg;
-var nextBtn, bg, typed;
+var nextBtn, bg;
+var touchCount = 0;
 var userShip, usership, enemyship, body, tempShip, tempEneShip, timeout;
 var EnemyShips = [];
 var EnemyShipGroup, GreenBulletsGroup, MeteoriteGroup, RedBulletsGroup, temp, rand;
@@ -16,8 +16,10 @@ var explodeAnimation;
 var Score = 0;
 var isTouch = false;
 var displayRule = true;
-var divClass;
+var shootBtn, shootBtnImage;
 var isPressed = false;
+var isTouched = false;
+var touch = []
 
 function preload() {
   //Load Disalouges 
@@ -42,6 +44,9 @@ function preload() {
 
   //Load BG Image
   bgImg = loadImage("Sprite/Background/BG2.png");
+
+  //Load ShootButton Image
+  shootBtnImage = loadImage("Sprite/shootBtn.png");
 }
 
 function setup() {
@@ -64,10 +69,20 @@ function setup() {
   //Spawn Enemies
   if (maxEnemyCount === 5) {
     for (var i = 0; i < maxEnemyCount; i++) {
-      EnemyShips.push(new Enemyship(width / 3.5 + i * 200, false));
+      EnemyShips.push(new Enemyship(width / 5 + i * 175, false));
     }
   }
-  //Meteors.push(new Meteorite(400, height / 4, false));
+  //Add Initial Fixed Point
+  touch = [{
+    x: width / 2,
+    y: height - 70
+  }];
+
+  //Shoot Button Sprite
+  shootBtn = createSprite(width * 0.1 - 25, height - 150);
+  shootBtn.addImage("Shoot", shootBtnImage);
+  shootBtn.scale = 0.5;
+  shootBtn.visible = false;
 }
 
 function draw() {
@@ -90,32 +105,34 @@ function draw() {
     textSize(25);
     strokeWeight(3);
 
+    dialTouch();
+
     //Play Dialogues after Clicking Next Button
-    if (touchCount === 1 && isPressed === false) {
+    if (touches.length === 1 && isPressed === false && touchCount === 1) {
       displayRule = false;
       isPressed = true;
-      //typed = " ";
       background(0);
       fill("white");
-      text("Colonel: Unusal Space Activity is Detected in Outer Atmosphere. \n  Action Order need to be released ASAP.", width / 2 - 200, height / 2);
+      text("Colonel: Unusal Space Activity is Detected in Outer Atmosphere. \n  Action Order need to be released ASAP.", width / 3 - 200, height / 2);
       dial1.play();
       setTimeout(() => {
         isPressed = false;
+        isTouched = false;
       }, 7000);
 
     }
-    if (touchCount === 2 && isPressed === false) {
-      dial1.stop();
+    if (touches.length === 1 && isPressed === false && touchCount === 2) {
       background(0);
       isPressed = true;
       fill("white");
-      text("Alien Ship Captain: Let's invade this Primitive Ball of Mud, so called Earth. \n Establish Connection with Earth Space Observatory.", width / 2 - 300, height / 2);
+      text("Alien Ship Captain: Let's invade this Primitive Ball of Mud, so called Earth. \n Establish Connection with Earth Space Observatory.", width / 3 - 300, height / 2);
       dial2.play();
       setTimeout(() => {
         isPressed = false;
+        isTouched = false;
       }, 7000);
     }
-    if (touchCount === 3 && isPressed === false) {
+    if (touches.length === 1 && isPressed === false && touchCount === 3) {
       isPressed = true;
       background(0);
       fill("white");
@@ -124,21 +141,23 @@ function draw() {
       dial3.play();
       setTimeout(() => {
         isPressed = false;
+        isTouched = false;
       }, 4000);
 
     }
-    if (touchCount === 4 && isPressed === false) {
+    if (touches.length === 1 && isPressed === false && touchCount === 4) {
       isPressed = true;
       background(0);
       dial3.stop();
       fill("white");
-      text("Colonel (to Alien Ship Captain): No mercies in war. Equal on both sides, we would rather \n choose to fight, than to serve.", width / 2 - 400, height / 2);
+      text("Colonel (to Alien Ship Captain): No mercies in war. Equal on both sides, we \n would rather choose to fight, than to serve.", width / 2 - 400, height / 2);
       dial4.play();
       setTimeout(() => {
         isPressed = false;
+        isTouched = false;
       }, 6000);
     }
-    if (touchCount === 5 && isPressed === false) {
+    if (touches.length === 1 && isPressed === false && touchCount === 5) {
       isPressed = true;
       background(0);
       fill("white");
@@ -147,9 +166,10 @@ function draw() {
       dial5.play();
       setTimeout(() => {
         isPressed = false;
+        isTouched = false;
       }, 5000);
     }
-    if (touchCount === 6 && isPressed === false) {
+    if (touches.length === 1 && isPressed === false && touchCount === 6) {
       isPressed = true;
       dial5.stop();
       background(0);
@@ -158,11 +178,12 @@ function draw() {
       dial6.play();
       setTimeout(() => {
         isPressed = false;
+        isTouched = false;
       }, 3000);
     }
 
     //Set GameState to 1 after All the Dialogues
-    if (touchCount === 7 && isPressed === false) {
+    if (touches.length === 1 && isPressed === false && touchCount === 7) {
       gameState = 1;
       dial6.stop();
       frameCount = 0;
@@ -182,10 +203,14 @@ function draw() {
     bg.visible = true;
     bg.velocityY = 3;
 
+    //Set Shoot Button's Visibility to true
+    shootBtn.visible = true;
+
     //Reset BG to center after moving out of Screen
     if (bg.y > height * 0.54) {
       bg.y = height / 2;
     }
+
 
     // userShip.usership.changeImage("userShip", userShipImage);
 
@@ -202,6 +227,7 @@ function draw() {
 
     //Function Called
     EnemyShipHealth();
+    touchStarted();
 
     //Spawn New Meteor every 20 seconds
     if (frameCount > 0 && frameCount % 600 === 0) {
@@ -240,8 +266,9 @@ function draw() {
       EnemyShips = [];
       GreenBullets = [];
       RedBullets = [];
+      touch.length = 1;
       for (var i = 0; i < maxEnemyCount; i++) {
-        EnemyShips.push(new Enemyship(width * 0.20 + i * 250, true));
+        EnemyShips.push(new Enemyship(width / 5 + i * 175, true));
       }
     }
 
@@ -316,11 +343,11 @@ function draw() {
 
 
 function keyPressed() {
-  //Make UserShip shoot Bullet when user Presses SPACE key
+  /* //Make UserShip shoot Bullet when user Presses SPACE key
   if (keyCode === 32) {
     GreenBulletSound.play();
     GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
-  }
+  } */
 
   //Reset the GameState to 1 when user presses R key
   if (keyIsDown(82) && gameState === 2) {
@@ -344,6 +371,36 @@ function EnemyShipHealth() {
   }
 }
 
+function dialTouch() {
+  if (touches.length === 1 && isTouched === false) {
+    isTouched = true;
+    touchCount += 1;
+    //console.log(touches);
+  }
+}
+
+function touchMoved() {
+  if (gameState === 1) {
+    touch.push(touches);
+  }
+}
+
 function touchStarted() {
-  touchCount += 1;
+  if (gameState === 1) {
+    if (touches[touches.length - 1] !== undefined) {
+      if (touches[touches.length - 1].x > shootBtn.x - 64 && touches[touches.length - 1].x < shootBtn.x + 64) {
+        if (touches[touches.length - 1].y >= shootBtn.y - 64 && touches[touches.length - 1].y <= shootBtn.y + 64) {
+          if (userShip.usership.x === touches[touches.length - 1].x && userShip.usership.y === touches[touches.length - 1].y) {
+            return false;
+          } else {
+            GreenBulletSound.play();
+            GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
+            touches[touches.length - 1].y = height + 100;
+            touches[touches.length - 1].x = width + 100;
+          }
+        }
+      }
+    }
+  }
+  return false;
 }
