@@ -16,17 +16,17 @@ class Usership {
         this.usership.visible = cond;
 
         //Create Life1 sprite
-        this.Life1 = createSprite(width * 0.07 - 60, height * 0.05);
+        this.Life1 = createSprite(width * 0.1 - 60, height * 0.05);
         this.Life1.addImage("Life1", this.LifeImg);
         this.Life1.visible = false;
 
         //Create Life2 sprite
-        this.Life2 = createSprite(width * 0.1 - 60, height * 0.05);
+        this.Life2 = createSprite(width * 0.13 - 50, height * 0.05);
         this.Life2.addImage("Life2", this.LifeImg);
         this.Life2.visible = false;
 
         //Create Life3 sprite    
-        this.Life3 = createSprite(width * 0.13 - 60, height * 0.05);
+        this.Life3 = createSprite(width * 0.16 - 40, height * 0.05);
         this.Life3.addImage("Life3", this.LifeImg);
         this.Life3.visible = false;
 
@@ -56,6 +56,9 @@ class Usership {
             this.Life2.visible = true;
             this.Life3.visible = true;
         }
+        if (this.lives > 3) {
+            this.lives = 3;
+        }
 
         //Conditions to display which Life Sprite acc. to number of User Lives
         if (this.lives === 3) {
@@ -82,23 +85,35 @@ class Usership {
             LifeLostSound.play();
             this.health = 100;
             this.lives -= 1;
+            touch.length = 1;
             this.usership.x = width / 2;
             this.usership.y = height - 70;
             //User Gets Stunned for 5 Seconds i.e User can't move ship 
             setTimeout(() => {
                 if (gameState === 1 && isTouch === true) {
                     this.health = 100;
-                    this.usership.x = mouseX;
-                    this.usership.y = mouseY;
                     isTouch = false;
                 }
-            }, 5000)
+            }, 4000)
         }
 
         //Make UserShip move with the mouse
         if (gameState === 1 && isTouch === false) {
-            this.usership.x = mouseX;
-            this.usership.y = mouseY;
+            if (touch.length === 0) {
+                this.usership.x = touch[0].x;
+                this.usership.y = touch[0].y;
+            } else {
+                for (var t = 1; t < touch.length; t++) {
+                    if (touch[t][0] !== undefined) {
+                        this.usership.x = touch[t][0].x;
+                        this.usership.y = touch[t][0].y;
+                    }
+                    /* else {
+                                           this.usership.x = width / 2;
+                                           this.usership.y = height - 70;
+                                       } */
+                }
+            }
         }
 
 
@@ -111,6 +126,7 @@ class Usership {
                 this.health = 0;
                 setTimeout(() => {
                     this.health = -10;
+                    this.lives += 1;
                 }, 50)
             }
         }
