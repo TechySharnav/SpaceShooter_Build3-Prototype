@@ -236,7 +236,6 @@ function draw() {
     //Function Called
     EnemyShipHealth();
 
-    touchStarted();
     touchEnded();
 
     //Spawn New Meteor every 20 seconds
@@ -333,7 +332,6 @@ function draw() {
 
     restartBtn.visible = true;
 
-    gameEnded();
   }
 
 
@@ -351,7 +349,7 @@ function draw() {
     text("GAME OVER!!", width / 2 - 40, height / 2);
     textSize(18);
   }
-
+  touchStarted();
 }
 
 
@@ -412,14 +410,7 @@ function touchStarted() {
       }
     }
   }
-  return false;
-}
 
-function touchEnded() {
-  isShooting = false;
-}
-
-function gameEnded() {
   if (gameState === 2) {
     if (touches[touches.length - 1].x > restartBtn.x - 64 && touches[touches.length - 1].x < restartBtn.x + 64) {
       if (touches[touches.length - 1].y >= restartBtn.y - 32 && touches[touches.length - 1].y <= restartBtn.y + 32) {
@@ -434,5 +425,10 @@ function gameEnded() {
       }
     }
   }
+
   return false;
+}
+
+function touchEnded() {
+  isShooting = false;
 }
