@@ -237,7 +237,6 @@ function draw() {
     EnemyShipHealth();
 
     touchStarted();
-    touchEnded();
 
     //Spawn New Meteor every 20 seconds
     if (frameCount > 0 && frameCount % 600 === 0) {
