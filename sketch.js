@@ -383,6 +383,7 @@ function touchMoved() {
   if (gameState === 1) {
     touch.push(touches);
   }
+  return false;
 }
 
 function touchStarted() {
@@ -390,16 +391,10 @@ function touchStarted() {
     if (touches[touches.length - 1] !== undefined) {
       if (touches[touches.length - 1].x > shootBtn.x - 64 && touches[touches.length - 1].x < shootBtn.x + 64) {
         if (touches[touches.length - 1].y >= shootBtn.y - 64 && touches[touches.length - 1].y <= shootBtn.y + 64) {
-          if (userShip.usership.x === touches[touches.length - 1].x && userShip.usership.y === touches[touches.length - 1].y) {
-            return false;
-          } else {
-            GreenBulletSound.play();
-            GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
-            return false;
-            touches[touches.length - 1].y = height + 100;
-            touches[touches.length - 1].x = width + 100;
-
-          }
+          GreenBulletSound.play();
+          GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
+          touches[touches.length - 1].y = height + 100;
+          touches[touches.length - 1].x = width + 100;
         }
       }
     }
