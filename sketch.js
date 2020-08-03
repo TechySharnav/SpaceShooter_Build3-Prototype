@@ -1,5 +1,5 @@
 //All Variable Declarations
-var gameState = 0;
+var gameState = 1;
 var dial1, dial2, dial3, dial4, dial5, dial6;
 var bgImg;
 var nextBtn, bg;
@@ -7,7 +7,7 @@ var touchCount = 0;
 var userShip, usership, enemyship, body, tempShip, tempEneShip, timeout;
 var EnemyShips = [];
 var EnemyShipGroup, GreenBulletsGroup, MeteoriteGroup, RedBulletsGroup, temp, rand;
-var maxEnemyCount = 5;
+var maxEnemyCount = 4;
 var Meteors = [];
 var GreenBullets = [];
 var RedBullets = [];
@@ -402,5 +402,4 @@ function touchStarted() {
       }
     }
   }
-  return false;
 }
