@@ -405,7 +405,6 @@ function touchStarted() {
           isShooting = true;
           GreenBulletSound.play();
           GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
-          touches.length = 1;
         }
       }
     }
@@ -431,4 +430,5 @@ function touchStarted() {
 
 function touchEnded() {
   isShooting = false;
+  return false;
 }
