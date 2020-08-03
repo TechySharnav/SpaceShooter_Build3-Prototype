@@ -236,7 +236,10 @@ function draw() {
     //Function Called
     EnemyShipHealth();
 
-    touchEnded();
+    if (isShooting === false && GreenBullets.length >= 0) {
+      touchStarted();
+    }
+
 
     //Spawn New Meteor every 20 seconds
     if (frameCount > 0 && frameCount % 600 === 0) {
@@ -332,6 +335,23 @@ function draw() {
 
     restartBtn.visible = true;
 
+    if (touches.length === 1) {
+      if (touches[0].x !== undefined) {
+        if (touches[0].x > restartBtn.x - 64 && touches[0].x < restartBtn.x + 64) {
+          if (touches[0].y > restartBtn.y - 32 && touches[0].y < restartBtn.x + 32) {
+            gameState = 1;
+            EnemyShips = [];
+            EnemyShipGroup.removeSprites();
+            userShip.lives = 3;
+            Score = 0;
+            frameCount = 0;
+            isTouch = false;
+            userShip.health = 100;
+          }
+        }
+      }
+    }
+
   }
 
 
@@ -349,7 +369,6 @@ function draw() {
     text("GAME OVER!!", width / 2, height / 2 - 40);
     textSize(18);
   }
-  touchStarted();
 }
 
 
@@ -398,37 +417,20 @@ function touchMoved() {
 }
 
 function touchStarted() {
-  if (gameState === 1 && isShooting === false) {
+  if (gameState === 1) {
     if (touches[touches.length - 1] !== undefined) {
       if (touches[touches.length - 1].x > shootBtn.x - 64 && touches[touches.length - 1].x < shootBtn.x + 64) {
         if (touches[touches.length - 1].y >= shootBtn.y - 64 && touches[touches.length - 1].y <= shootBtn.y + 64) {
-          isShooting = true;
           GreenBulletSound.play();
           GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
+          isShooting = true;
         }
       }
     }
   }
 
-  if (gameState === 2) {
-    if (touches[touches.length - 1].x > restartBtn.x - 64 && touches[touches.length - 1].x < restartBtn.x + 64) {
-      if (touches[touches.length - 1].y >= restartBtn.y - 32 && touches[touches.length - 1].y <= restartBtn.y + 32) {
-        gameState = 1;
-        EnemyShips = [];
-        EnemyShipGroup.removeSprites();
-        userShip.lives = 3;
-        Score = 0;
-        frameCount = 0;
-        isTouch = false;
-        userShip.health = 100;
-      }
-    }
-  }
-
-  return false;
 }
 
 function touchEnded() {
   isShooting = false;
-  return false;
 }
