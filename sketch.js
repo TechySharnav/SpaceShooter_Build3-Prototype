@@ -237,6 +237,7 @@ function draw() {
     EnemyShipHealth();
 
     touchStarted();
+    touchEnded();
 
     //Spawn New Meteor every 20 seconds
     if (frameCount > 0 && frameCount % 600 === 0) {
@@ -331,6 +332,8 @@ function draw() {
     bg.velocityY = 0;
 
     restartBtn.visible = true;
+
+    gameEnded();
   }
 
 
@@ -347,18 +350,17 @@ function draw() {
     text("Score: " + Score, width / 2, height * 0.25);
     text("GAME OVER!!", width / 2 - 40, height / 2);
     textSize(18);
-    text("Press R to Restart", width / 2 - 20, height / 2 + 80)
   }
 
 }
 
 
-function keyPressed() {
-  /* //Make UserShip shoot Bullet when user Presses SPACE key
+/* function keyPressed() {
+  //Make UserShip shoot Bullet when user Presses SPACE key
   if (keyCode === 32) {
     GreenBulletSound.play();
     GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
-  } */
+  }
 
   //Reset the GameState to 1 when user presses R key
   if (keyIsDown(82) && gameState === 2) {
@@ -371,7 +373,7 @@ function keyPressed() {
     isTouch = false;
     userShip.health = 100;
   }
-}
+} */
 
 //Remove the Enemy Ships from array, if their Health reaches zero
 function EnemyShipHealth() {
@@ -407,12 +409,17 @@ function touchStarted() {
           GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
           touches.length = 1;
         }
-      } else {
-        isShooting = false;
       }
     }
   }
+  return false;
+}
 
+function touchEnded() {
+  isShooting = false;
+}
+
+function gameEnded() {
   if (gameState === 2) {
     if (touches[touches.length - 1].x > restartBtn.x - 64 && touches[touches.length - 1].x < restartBtn.x + 64) {
       if (touches[touches.length - 1].y >= restartBtn.y - 32 && touches[touches.length - 1].y <= restartBtn.y + 32) {
