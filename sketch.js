@@ -20,6 +20,7 @@ var shootBtn, shootBtnImage;
 var isPressed = false;
 var isTouched = false;
 var touch = []
+var isShooting = false;
 
 function preload() {
   //Load Disalouges 
@@ -227,7 +228,12 @@ function draw() {
 
     //Function Called
     EnemyShipHealth();
-    touchStarted();
+
+    if (isShooting === false) {
+      isShooting = true;
+      touchStarted();
+    }
+    touchEnded();
 
     //Spawn New Meteor every 20 seconds
     if (frameCount > 0 && frameCount % 600 === 0) {
@@ -398,4 +404,8 @@ function touchStarted() {
       }
     }
   }
+}
+
+function touchEnded() {
+  isShooting = false;
 }
