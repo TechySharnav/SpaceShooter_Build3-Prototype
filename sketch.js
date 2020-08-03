@@ -395,8 +395,10 @@ function touchStarted() {
           } else {
             GreenBulletSound.play();
             GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
+            return false;
             touches[touches.length - 1].y = height + 100;
             touches[touches.length - 1].x = width + 100;
+
           }
         }
       }
