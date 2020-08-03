@@ -346,7 +346,7 @@ function draw() {
   if (gameState === 2) {
     textSize(25);
     text("Score: " + Score, width / 2, height * 0.25);
-    text("GAME OVER!!", width / 2 - 40, height / 2);
+    text("GAME OVER!!", width / 2, height / 2 - 40);
     textSize(18);
   }
   touchStarted();
