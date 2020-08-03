@@ -2,7 +2,7 @@
 var gameState = 1;
 var dial1, dial2, dial3, dial4, dial5, dial6;
 var bgImg;
-var nextBtn, bg;
+var restartBtn, bg, restartBtnImg;
 var touchCount = 0;
 var userShip, usership, enemyship, body, tempShip, tempEneShip, timeout;
 var EnemyShips = [];
@@ -41,7 +41,7 @@ function preload() {
   ScoreUpSound = loadSound("SFX/ScoreUp.mp3");
 
   //Load NextButton Image
-  nextBtnImg = loadImage("Sprite/nextBtn.png");
+  restartBtnImg = loadImage("Sprite/restartBtn.png");
 
   //Load BG Image
   bgImg = loadImage("Sprite/Background/BG2.png");
@@ -84,6 +84,11 @@ function setup() {
   shootBtn.addImage("Shoot", shootBtnImage);
   shootBtn.scale = 0.5;
   shootBtn.visible = false;
+
+  //Restart Button Sprite
+  restartBtn = createSprite(width / 2, height / 2);
+  restartBtn.addImage("Restart", restartBtnImg);
+  restartBtn.visible = false;
 }
 
 function draw() {
@@ -207,6 +212,8 @@ function draw() {
     //Set Shoot Button's Visibility to true
     shootBtn.visible = true;
 
+    restartBtn.visible = false;
+
     //Reset BG to center after moving out of Screen
     if (bg.y > height * 0.54) {
       bg.y = height / 2;
@@ -229,10 +236,7 @@ function draw() {
     //Function Called
     EnemyShipHealth();
 
-    if (isShooting === false) {
-      isShooting = true;
-      touchStarted();
-    }
+    touchStarted();
     touchEnded();
 
     //Spawn New Meteor every 20 seconds
@@ -326,6 +330,8 @@ function draw() {
     Meteors = [];
 
     bg.velocityY = 0;
+
+    restartBtn.visible = true;
   }
 
 
@@ -393,19 +399,34 @@ function touchMoved() {
 }
 
 function touchStarted() {
-  if (gameState === 1) {
+  if (gameState === 1 && isShooting === false) {
     if (touches[touches.length - 1] !== undefined) {
       if (touches[touches.length - 1].x > shootBtn.x - 64 && touches[touches.length - 1].x < shootBtn.x + 64) {
         if (touches[touches.length - 1].y >= shootBtn.y - 64 && touches[touches.length - 1].y <= shootBtn.y + 64) {
+          isShooting = true;
           GreenBulletSound.play();
           GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
           touches.length = 1;
         }
+      } else {
+        isShooting = false;
       }
     }
   }
-}
 
-function touchEnded() {
-  isShooting = false;
+  if (gameState === 2) {
+    if (touches[touches.length - 1].x > restartBtn.x - 64 && touches[touches.length - 1].x < restartBtn.x + 64) {
+      if (touches[touches.length - 1].y >= restartBtn.y - 32 && touches[touches.length - 1].y <= restartBtn.y + 32) {
+        gameState = 1;
+        EnemyShips = [];
+        EnemyShipGroup.removeSprites();
+        userShip.lives = 3;
+        Score = 0;
+        frameCount = 0;
+        isTouch = false;
+        userShip.health = 100;
+      }
+    }
+  }
+  return false;
 }
