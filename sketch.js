@@ -393,8 +393,7 @@ function touchStarted() {
         if (touches[touches.length - 1].y >= shootBtn.y - 64 && touches[touches.length - 1].y <= shootBtn.y + 64) {
           GreenBulletSound.play();
           GreenBullets.push(new laserBullet(userShip.usership.x - 30, userShip.usership.y + 10, "Green"));
-          touches[touches.length - 1].y = height + 100;
-          touches[touches.length - 1].x = width + 100;
+          touches.length = 1;
         }
       }
     }
