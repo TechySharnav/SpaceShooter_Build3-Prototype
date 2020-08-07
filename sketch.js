@@ -1,5 +1,5 @@
 //All Variable Declarations
-var gameState = 0;
+var gameState = 1;
 var dial1, dial2, dial3, dial4, dial5, dial6;
 var bgImg;
 var restartBtn, bg, restartBtnImg;
@@ -21,33 +21,34 @@ var isPressed = false;
 var isTouched = false;
 var touch = []
 var isShooting = false;
+var time = 30;
 
 function preload() {
   //Load Disalouges 
-  dial1 = loadSound("SFX/d1.mp3");
-  dial2 = loadSound("SFX/d2_1.mp3");
-  dial3 = loadSound("SFX/d3_3.mp3");
-  dial4 = loadSound("SFX/d4.mp3");
-  dial5 = loadSound("SFX/d5.mp3");
-  dial6 = loadSound("SFX/d6_6.mp3");
+  dial1 = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/d1.mp3");
+  dial2 = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/d2_1.mp3");
+  dial3 = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/d3_3.mp3");
+  dial4 = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/d4.mp3");
+  dial5 = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/d5.mp3");
+  dial6 = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/d6_6.mp3");
 
   //Load SFX
-  RedBulletSound = loadSound("SFX/EnemyShoot.mp3");
-  GreenBulletSound = loadSound("SFX/Shoot.mp3");
-  MeteorSound = loadSound("SFX/MeteorSwoosh.mp3");
-  halfDamageSound = loadSound("SFX/half_damaged.mp3")
-  LifeLostSound = loadSound("SFX/LifeLost.mp3");
-  LifeGainSound = loadSound("SFX/LifeGain.mp3");
-  ScoreUpSound = loadSound("SFX/ScoreUp.mp3");
+  RedBulletSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/EnemyShoot.mp3");
+  GreenBulletSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/Shoot.mp3");
+  MeteorSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/MeteorSwoosh.mp3");
+  halfDamageSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/half_damaged.mp3")
+  LifeLostSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/LifeLost.mp3");
+  LifeGainSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/LifeGain.mp3");
+  ScoreUpSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/ScoreUp.mp3");
 
   //Load NextButton Image
-  restartBtnImg = loadImage("Sprite/restartBtn.png");
+  restartBtnImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/restartBtn.png");
 
   //Load BG Image
-  bgImg = loadImage("Sprite/Background/BG2.png");
+  bgImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Background/BG2.png");
 
   //Load ShootButton Image
-  shootBtnImage = loadImage("Sprite/shootBtn.png");
+  shootBtnImage = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/shootBtn.png");
 }
 
 function setup() {
@@ -219,6 +220,15 @@ function draw() {
       bg.y = height / 2;
     }
 
+    if (frameCount % 30 === 0) {
+      time = time - 1;
+    }
+    if (time < 0) {
+      time = 0;
+    }
+    if (time === 0) {
+      gameState = 3;
+    }
 
     // userShip.usership.changeImage("userShip", userShipImage);
 
@@ -347,6 +357,41 @@ function draw() {
             frameCount = 0;
             isTouch = false;
             userShip.health = 100;
+            time = 30;
+          }
+        }
+      }
+    }
+
+  }
+
+  if (gameState === 3) {
+    //Remove all the Sprites from Group and Empty the Array
+    RedBulletsGroup.removeSprites();
+    GreenBulletsGroup.removeSprites();
+    MeteoriteGroup.removeSprites();
+    Powerups = [];
+    RedBullets = [];
+    GreenBullets = [];
+    Meteors = [];
+
+    bg.velocityY = 0;
+
+    restartBtn.visible = true;
+
+    if (touches.length === 1) {
+      if (touches[0].x !== undefined) {
+        if (touches[0].x > restartBtn.x - 64 && touches[0].x < restartBtn.x + 64) {
+          if (touches[0].y > restartBtn.y - 32 && touches[0].y < restartBtn.x + 32) {
+            gameState = 1;
+            EnemyShips = [];
+            EnemyShipGroup.removeSprites();
+            userShip.lives = 3;
+            Score = 0;
+            frameCount = 0;
+            isTouch = false;
+            userShip.health = 100;
+            time = 30;
           }
         }
       }
@@ -367,6 +412,12 @@ function draw() {
     textSize(25);
     text("Score: " + Score, width / 2, height * 0.25);
     text("GAME OVER!!", width / 2, height / 2 - 40);
+    textSize(18);
+  }
+  if (gameState === 3) {
+    textSize(25);
+    text("Score: " + Score, width / 2, height * 0.25);
+    text("TIME UP!!", width / 2, height / 2 - 40);
     textSize(18);
   }
 }
