@@ -81,7 +81,7 @@ function setup() {
   }];
 
   //Shoot Button Sprite
-  shootBtn = createSprite(width * 0.1 - 25, height - 150);
+  shootBtn = createSprite(width * 0.1, height - 150);
   shootBtn.addImage("Shoot", shootBtnImage);
   shootBtn.scale = 0.5;
   shootBtn.visible = false;
@@ -406,7 +406,7 @@ function draw() {
   if (gameState === 1) {
     textSize(20);
     text("Score: " + Score, width - 150, height * 0.1);
-    text("TIME REMAINING: " + time + " sec", width - 300, height * 0.9)
+    text("TIME REMAINING: " + time + " sec", width *0.15, height * 0.9)
   }
   //Display Score and Game Over text when game is in Over State
   if (gameState === 2) {
