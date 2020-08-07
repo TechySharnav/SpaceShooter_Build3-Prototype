@@ -2,7 +2,7 @@ class Meteorite {
     constructor(x, y, cond) {
         //Generate Random Number and Load image to meteor acc. to that
         this.rand = Math.round(random(1, 2));
-        this.image = loadImage("Sprite/meteor" + this.rand + ".png");
+        this.image = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/meteor" + this.rand + ".png");
 
         //Create a Meteorite Sprite
         this.body = createSprite(x, y, 20, 20);

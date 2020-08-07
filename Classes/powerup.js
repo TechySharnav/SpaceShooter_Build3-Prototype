@@ -4,12 +4,12 @@ class Powerup {
         this.rand = Math.round(random(1, 3));
 
         //Load Powerup Images for Identification
-        this.ShieldpowerImg = loadImage("Sprite/Powerups/Shield.png");
-        this.ScoreImg = loadImage("Sprite/Powerups/Score.png");
-        this.LifeImg = loadImage("Sprite/Powerups/Life.png");
+        this.ShieldpowerImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Powerups/Shield.png");
+        this.ScoreImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Powerups/Score.png");
+        this.LifeImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Powerups/Life.png");
 
         //Load Shield Image
-        this.shield = loadImage("Sprite/shield.png");
+        this.shield = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/shield.png");
 
         //Create Powerup Body Sprite
         this.body = createSprite(random(width * 0.1, width * 0.9), -10);

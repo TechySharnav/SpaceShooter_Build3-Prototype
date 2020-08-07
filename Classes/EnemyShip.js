@@ -1,13 +1,13 @@
 class Enemyship {
     constructor(x, cond) {
         this.rand = Math.round(random(1, 4));
-        this.image = loadAnimation("Sprite/enemyShip" + this.rand + ".png");
-        this.explodeSound = loadSound("SFX/Explosion.mp3");
+        this.image = loadAnimation("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/enemyShip" + this.rand + ".png");
+        this.explodeSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/Explosion.mp3");
 
         //Load Explosion Animation
-        this.explodeAnimation = loadAnimation("Sprite/Explosion/1.png", "Sprite/Explosion/2.png", "Sprite/Explosion/3.png",
-            "Sprite/Explosion/4.png", "Sprite/Explosion/5.png", "Sprite/Explosion/6.png", "Sprite/Explosion/7.png", "Sprite/Explosion/8.png",
-            "Sprite/Explosion/9.png", "Sprite/Explosion/10.png")
+        this.explodeAnimation = loadAnimation("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/1.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/2.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/3.png",
+            "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/4.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/5.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/6.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/7.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/8.png",
+            "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/9.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/10.png")
 
         this.enemyship = createSprite(random(width / 2 - 200, width / 2 + 200), -20, 50, 50);
         this.x = x;

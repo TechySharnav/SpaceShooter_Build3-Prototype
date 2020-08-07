@@ -2,7 +2,7 @@ class laserBullet {
     constructor(x, y, color) {
         //Assign color and Load Bullet Image acc. to that
         this.color = color;
-        this.img = loadImage("Sprite/laser" + this.color + ".png");
+        this.img = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/laser" + this.color + ".png");
 
         //Create Bullet Sprite
         this.body = createSprite(x, y, 5, 20);
@@ -40,6 +40,7 @@ class laserBullet {
                 if (this.body.isTouching(tempShip)) {
                     this.body.destroy();
                     Score += 100;
+                    time = time + 3;
                     if (tempEneShip !== undefined) {
                         tempEneShip.health = 0;
                     }

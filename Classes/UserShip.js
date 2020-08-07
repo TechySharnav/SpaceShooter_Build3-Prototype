@@ -1,15 +1,15 @@
 class Usership {
     constructor(cond) {
         //Load Graphics and Sound
-        this.image = loadImage("Sprite/player.png");
-        this.damageImg = loadImage("Sprite/playerDamaged.png");
-        this.LifeImg = loadImage("Sprite/life.png");
-        this.explodeSound = loadSound("SFX/Explosion.mp3");
+        this.image = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/player.png");
+        this.damageImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/playerDamaged.png");
+        this.LifeImg = loadImage("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/life.png");
+        this.explodeSound = loadSound("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/SFX/Explosion.mp3");
 
         //Load Explosion Animation
-        this.explodeAnimation = loadAnimation("Sprite/Explosion/1.png", "Sprite/Explosion/2.png", "Sprite/Explosion/3.png",
-            "Sprite/Explosion/4.png", "Sprite/Explosion/5.png", "Sprite/Explosion/6.png", "Sprite/Explosion/7.png", "Sprite/Explosion/8.png",
-            "Sprite/Explosion/9.png", "Sprite/Explosion/10.png")
+        this.explodeAnimation = loadAnimation("https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/1.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/2.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/3.png",
+            "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/4.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/5.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/6.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/7.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/8.png",
+            "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/9.png", "https://techysharnav.github.io/SpaceShooter_Build3-Prototype/Sprite/Explosion/10.png")
 
         //Create User Ship Sprite
         this.usership = createSprite(width / 2, height - 70, 50, 50);
@@ -94,7 +94,7 @@ class Usership {
                     this.health = 100;
                     isTouch = false;
                 }
-            }, 4000)
+            }, 5000)
         }
 
         //Make UserShip move with the mouse
