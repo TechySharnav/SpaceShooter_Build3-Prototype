@@ -101,10 +101,10 @@ function draw() {
       text("Rules", width / 2 - 70, height * 0.1);
       textSize(25);
       text("1. You have Total of 4 lives to play the Game", width / 2 - 280, height * 0.2);
-      text("2. You can Control Ship using Mouse", width / 2 - 280, height * 0.25);
-      text("3. User has ability to pickup power-ups", width / 2 - 280, height * 0.3);
-      text("4. You Have to destroy As many Enemy Ships as Possible", width / 2 - 280, height * 0.35);
-      text("5. Shields only protect you from the bullets.", width / 2 - 280, height * 0.4);
+      text("2. You can Control Ship using Mouse", width / 2 - 280, height * 0.3);
+      text("3. User has ability to pickup power-ups", width / 2 - 280, height * 0.4);
+      text("4. You Have to destroy As many Enemy Ships as Possible", width / 2 - 280, height * 0.5);
+      text("5. Shields only protect you from the bullets.", width / 2 - 280, height * 0.6);
     } else {
       noFill();
     }
