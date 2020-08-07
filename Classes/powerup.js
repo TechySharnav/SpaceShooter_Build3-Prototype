@@ -57,7 +57,9 @@ class Powerup {
 
                     if (this.shieldBody.isTouching(tempShip)) {
                         Score += 100;
+                        if(tempEneShip !== undefined){
                         tempEneShip.health = 0;
+                        }
                         clearTimeout(timeout);
                         this.shieldBody.destroy();
                     }
