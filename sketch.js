@@ -1,5 +1,5 @@
 //All Variable Declarations
-var gameState = 1;
+var gameState = 0;
 var dial1, dial2, dial3, dial4, dial5, dial6;
 var bgImg;
 var restartBtn, bg, restartBtnImg;
