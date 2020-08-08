@@ -40,7 +40,7 @@ class laserBullet {
                 if (this.body.isTouching(tempShip)) {
                     this.body.destroy();
                     Score += 100;
-                    time = time + 3;
+                    time = time + 2;
                     if (tempEneShip !== undefined) {
                         tempEneShip.health = 0;
                     }
